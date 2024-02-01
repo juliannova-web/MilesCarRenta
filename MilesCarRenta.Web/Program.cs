@@ -1,7 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using MilesCarRenta.Web.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+var mySQLConfiguration =  builder.Configuration.GetConnectionString("LocalConnection");
+
+builder.Services.AddDbContext<DataContext>(o =>
+{
+    o.UseMySql(mySQLConfiguration, ServerVersion.AutoDetect(mySQLConfiguration));
+});
+
+//builder.Services.AddScoped()
+
 
 var app = builder.Build();
 
